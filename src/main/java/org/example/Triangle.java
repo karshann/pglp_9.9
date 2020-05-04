@@ -5,7 +5,7 @@ public class Triangle implements Forme {
     Point p1;
     Point p2;
     Point p3;
-    public Triangle(String Nom , int x1 , int y1 , int x2 , int y2, int x3 , int y3 ){
+    public Triangle(String Nom , double x1 , double y1 , double x2 , double y2, double x3 , double y3 ){
         this.Nom=Nom;
         this.p1=new Point(x1,y1);
         this.p2=new Point(x2,y2);

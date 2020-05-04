@@ -5,7 +5,7 @@ public class Rectangle implements Forme{
     String nom;
     Point p1;
     Point p2;
-    public Rectangle(String nom , int x1 , int y1 , int x2 , int y2){
+    public Rectangle(String nom , double x1 , double y1 , double x2 , double y2){
         this.p1=new Point(x1,y1);
         this.p2=new Point(x2,y2);
         this.nom = nom;
