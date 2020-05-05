@@ -6,4 +6,7 @@ public interface Forme extends Composite {
 
     @Override
     void move(double x, double y);
+
+    @Override
+    String return_name();
 }

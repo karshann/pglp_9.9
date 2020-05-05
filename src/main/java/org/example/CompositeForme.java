@@ -23,4 +23,8 @@ public class CompositeForme implements Composite{
         }
     }
 
+    @Override
+    public String return_name() {
+        return this.Nom;
+    }
 }

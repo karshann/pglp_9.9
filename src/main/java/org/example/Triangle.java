@@ -32,4 +32,9 @@ public class Triangle implements Forme {
     public void print() {
         System.out.println(this.toString());
     }
+
+    @Override
+    public String return_name() {
+        return this.Nom;
+    }
 }
