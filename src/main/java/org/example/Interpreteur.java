@@ -19,13 +19,6 @@ public class Interpreteur {
         }
         return null;
     }
-    public void modif_composite(Composite composite){
-        for (int i = 0 ; i< compositeListe.size() ; i++ ) {
-            if (compositeListe.get(i).return_name().equals(composite.return_name())){
-               compositeListe.set(i,composite);
-            }
-        }
-    }
     public void affiche_Liste(){
         for (Composite composite:compositeListe) {
             composite.print();

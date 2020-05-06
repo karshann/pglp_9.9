@@ -2,6 +2,9 @@ package org.example;
 
 public class CommandeMove implements Commande{
     Interpreteur I;
+    String[] val;
+    String name;
+    Composite c;
 
 
     public CommandeMove(Interpreteur I){
@@ -9,25 +12,32 @@ public class CommandeMove implements Commande{
     }
 
     @Override
-    public void execute(String S) {
-        String suite =S.replace("move","");
-        suite=suite.replaceAll("\\(" ,"");
-        suite=suite.replaceAll("\\)","");
-        String name ;
+    public void init(String S){
+        String tmp =S.replace("move","");
+        tmp=tmp.replaceAll("\\(" ,"");
+        tmp=tmp.replaceAll("\\)","");
+        val=tmp.split(",");
+        name=val[0];
+    }
+
+
+    @Override
+    public void execute() {
         double x=0;
         double y=0;
-        String[] tab=suite.split(",");
-        name=tab[0];
         try{
-            x=Double.parseDouble(tab[1]);
-            y=Double.parseDouble(tab[2]);
-            Composite composite=I.getComposite(name);
-            composite.move(x,y);
-            I.modif_composite(composite);
+            x=Double.parseDouble(val[1]);
+            y=Double.parseDouble(val[2]);
+            c=I.getComposite(name);
+            c.move(x,y);
         }
         catch(IllegalArgumentException e){
             e.printStackTrace();
         }
 
+    }
+    @Override
+    public void print() {
+        c.print();
     }
 }

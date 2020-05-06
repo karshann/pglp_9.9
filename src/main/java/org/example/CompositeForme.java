@@ -9,11 +9,17 @@ public class CompositeForme implements Composite{
     public CompositeForme(String nom) {
         this.Nom=nom;
     }
+
+    public void addComposite(Composite composite){
+        this.enfantForme.add(composite);
+    }
     @Override
     public void print() {
+        System.out.println(this.Nom + ":(");
         for (Composite composite : enfantForme) {
             composite.print();
         }
+        System.out.println(")");
     }
 
     @Override

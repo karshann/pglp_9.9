@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class GestionnairedeCommande {
 
-    private final Map<String, Commande> commandes;
+    /*private final Map<String, Commande> commandes;
     Interpreteur I;
     public GestionnairedeCommande(){
         this.commandes=new HashMap<>();
@@ -13,6 +13,7 @@ public class GestionnairedeCommande {
     public void ajouterCommande(String nom, Commande Commande) {
         this.commandes.put(nom, Commande);
     }
+
     public void execCommande(String chaine , Interpreteur I)  {
         this.I=I;
         boolean bool=false;
@@ -30,5 +31,7 @@ public class GestionnairedeCommande {
         this.I = I;
         this.ajouterCommande("=",new Commandeegale(I));
         this.ajouterCommande("move",new CommandeMove(I));
-    }
+        this.ajouterCommande("groupe",new Commandegroupe(I));
+        this.ajouterCommande("addgrp",new Commandeaddgroupe(I));
+    }*/
 }

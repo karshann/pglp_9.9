@@ -10,10 +10,13 @@ public class DrawingApp
 {
     public void run(){
         DrawingTUI D = new DrawingTUI();
+        D.init();
         Scanner sc= new Scanner(System.in);
+        Commande commande;
         while (true){
-            D.Entree(sc.nextLine());
-
+           commande= D.nextCommande(sc.nextLine());
+           commande.execute();
+           commande.print();
         }
 
     }
