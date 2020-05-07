@@ -10,6 +10,10 @@ public class CompositeForme implements Composite{
         this.Nom=nom;
     }
 
+    public List<Composite> getEnfantForme() {
+        return enfantForme;
+    }
+
     public void addComposite(Composite composite){
         this.enfantForme.add(composite);
     }

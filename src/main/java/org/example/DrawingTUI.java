@@ -20,6 +20,7 @@ public class DrawingTUI {
         this.ajouterCommande("groupe",new Commandegroupe(I));
         this.ajouterCommande("addgrp",new Commandeaddgroupe(I));
         this.ajouterCommande("quitter",new CommandeQuit());
+        this.ajouterCommande("save",new CommandeSave(I));
     }
     public Commande nextCommande(String S){
         boolean bool=false;
