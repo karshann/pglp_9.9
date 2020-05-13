@@ -20,7 +20,7 @@ public class RectangleDAO extends DAO<Rectangle>{
             e.printStackTrace();
         }
         this.cdb.disconnect();
-        return null;
+        return obj;
     }
 
     @Override
@@ -44,7 +44,36 @@ public class RectangleDAO extends DAO<Rectangle>{
     }
 
     @Override
-    public void delete(String id) {
+    public Rectangle update(Rectangle obj) {
+        this.cdb.connect();
+        try (PreparedStatement update =
+                     this.cdb.connect.prepareStatement("UPDATE Rectangle SET x1= ? , y1= ? , x2= ? , y2= ?  WHERE Nom= ?")) {
+            update.setDouble(1, obj.p1.x);
+            update.setDouble(2, obj.p1.y);
+            update.setDouble(3, obj.p2.x);
+            update.setDouble(4, obj.p2.y);
+            update.setString(5,obj.nom);
+            update.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        this.cdb.disconnect();
+
+        return obj;
+    }
+
+    @Override
+    public void delete(String id) {
+        this.cdb.connect();
+        try (PreparedStatement delete =
+                     this.cdb.connect.prepareStatement("DELETE FROM Rectangle R WHERE R.Nom = ?"); ) {
+            delete.setString(1, id);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cdb.disconnect();
     }
 }

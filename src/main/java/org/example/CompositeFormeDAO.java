@@ -109,6 +109,11 @@ public class CompositeFormeDAO extends DAO<CompositeForme> {
     }
 
     @Override
+    public CompositeForme update(CompositeForme obj) {
+        return null;
+    }
+
+    @Override
     public void delete(String id) {
         this.cdb.connect();
         try (PreparedStatement delete = this.cdb.connect.prepareStatement("DELETE FROM CompositeForm C WHERE C.Nom = ?"); ) {

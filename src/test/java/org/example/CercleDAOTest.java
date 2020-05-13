@@ -30,4 +30,8 @@ public class CercleDAOTest {
         cd.delete("c");
         assertEquals(cd.find("c") , null);
     }
+
+    @Test
+    public void update() {
+    }
 }

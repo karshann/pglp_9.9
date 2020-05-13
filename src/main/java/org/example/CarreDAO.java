@@ -45,6 +45,26 @@ class CarreDAO extends DAO<Carre>{
     }
 
     @Override
+    public Carre update(Carre obj) {
+        this.cdb.connect();
+        try (PreparedStatement update =
+                     this.cdb.connect.prepareStatement("UPDATE Carre SET x= ? , y= ? , cote =? WHERE Nom= ?")) {
+            update.setDouble(1, obj.p1.x);
+            update.setDouble(2, obj.p1.y);
+            update.setDouble(3, obj.cote);
+            update.setString(4,obj.Nom);
+            update.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.cdb.disconnect();
+
+        return obj;
+    }
+
+    @Override
     public void delete(String id) {
         this.cdb.connect();
         try (PreparedStatement delete =

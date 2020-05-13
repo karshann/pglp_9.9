@@ -21,7 +21,7 @@ public class TriangleDAO extends DAO<Triangle> {
             e.printStackTrace();
         }
         this.cdb.disconnect();
-        return null;
+        return obj;
     }
 
     @Override
@@ -42,6 +42,29 @@ public class TriangleDAO extends DAO<Triangle> {
             this.cdb.disconnect();
 
             return T;
+    }
+
+    @Override
+    public Triangle update(Triangle obj) {
+        this.cdb.connect();
+        try (PreparedStatement update =
+                     this.cdb.connect.prepareStatement("UPDATE Triangle SET x1= ? , y1= ? , x2= ? , y2= ?, x3= ? , y3= ?  WHERE Nom= ?")) {
+            update.setDouble(1, obj.p1.x);
+            update.setDouble(2, obj.p1.y);
+            update.setDouble(3, obj.p2.x);
+            update.setDouble(4, obj.p2.y);
+            update.setDouble(5, obj.p3.x);
+            update.setDouble(6, obj.p3.y);
+            update.setString(7,obj.Nom);
+            update.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.cdb.disconnect();
+
+        return obj;
     }
 
     @Override

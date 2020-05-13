@@ -14,4 +14,6 @@ public abstract class DAO<T>  {
 
     public abstract void delete(String id);
 
+    public abstract T update(T obj);
+
 }

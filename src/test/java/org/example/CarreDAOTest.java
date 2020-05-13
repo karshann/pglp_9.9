@@ -31,4 +31,11 @@ public class CarreDAOTest {
         cd.delete("c1");
         assertEquals(cd.find("c1") , null);
     }
+
+    @Test
+    public void update() {
+        Carre c1= new Carre("c1",10.0,10.0,5);
+        CarreDAO cd=new CarreDAO();
+        assertEquals(cd.update(c1),c1);
+    }
 }

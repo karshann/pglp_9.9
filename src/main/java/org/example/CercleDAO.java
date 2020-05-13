@@ -42,6 +42,25 @@ public class CercleDAO extends DAO<Cercle>{
         return c;
     }
 
+    @Override
+    public Cercle update(Cercle obj) {
+        this.cdb.connect();
+        try (PreparedStatement update =
+                     this.cdb.connect.prepareStatement("UPDATE Cercle SET x= ? , y= ? , rayon =? WHERE Nom= ?")) {
+            update.setDouble(1, obj.centre.x);
+            update.setDouble(2, obj.centre.y);
+            update.setDouble(3, obj.rayon);
+            update.setString(4,obj.nom);
+            update.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.cdb.disconnect();
+
+        return obj;
+    }
 
     @Override
     public void delete(String id) {
