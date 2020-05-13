@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class TriangleDAO extends DAO<Triangle> {
     @Override
     public Triangle create(Triangle obj) {
-        this.connect();
-        try (PreparedStatement TriangleInsert = this.connect.prepareStatement("INSERT INTO Triangle(Nom,x1,y1,x2,y2,x3,y3) values(?, ?, ?, ?, ?, ?, ?)");) {
+        this.cdb.connect();
+        try (PreparedStatement TriangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Triangle(Nom,x1,y1,x2,y2,x3,y3) values(?, ?, ?, ?, ?, ?, ?)");) {
             TriangleInsert.setString(1, obj.Nom);
             TriangleInsert.setDouble(2, obj.p1.x);
             TriangleInsert.setDouble(3, obj.p1.y);
@@ -20,15 +20,15 @@ public class TriangleDAO extends DAO<Triangle> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
         return null;
     }
 
     @Override
     public Triangle find(String id) {
             Triangle T = null;
-            this.connect();
-            try (PreparedStatement select = this.connect.prepareStatement("SELECT * FROM Triangle T WHERE T.Nom = ?")) {
+            this.cdb.connect();
+            try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM Triangle T WHERE T.Nom = ?")) {
                 select.setString(1, id);
                 try (ResultSet res = select.executeQuery()) {
                     if(res.next()) {
@@ -39,21 +39,21 @@ public class TriangleDAO extends DAO<Triangle> {
                 e.printStackTrace();
             }
 
-            this.disconnect();
+            this.cdb.disconnect();
 
             return T;
     }
 
     @Override
     public void delete(String id) {
-        this.connect();
+        this.cdb.connect();
         try (PreparedStatement delete =
-                     this.connect.prepareStatement("DELETE FROM Triangle T WHERE T.Nom = ?"); ) {
+                     this.cdb.connect.prepareStatement("DELETE FROM Triangle T WHERE T.Nom = ?"); ) {
             delete.setString(1, id);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
     }
 }

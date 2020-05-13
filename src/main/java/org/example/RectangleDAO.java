@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class RectangleDAO extends DAO<Rectangle>{
     @Override
     public Rectangle create(Rectangle obj) {
-        this.connect();
-        try (PreparedStatement rectangleInsert = this.connect.prepareStatement("INSERT INTO Rectangle(nom,x1,y1,x2,y2) values(?, ?, ?, ?, ?)");) {
+        this.cdb.connect();
+        try (PreparedStatement rectangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Rectangle(nom,x1,y1,x2,y2) values(?, ?, ?, ?, ?)");) {
             rectangleInsert.setString(1, obj.nom);
             rectangleInsert.setDouble(2, obj.p1.x);
             rectangleInsert.setDouble(3, obj.p1.y);
@@ -19,15 +19,15 @@ public class RectangleDAO extends DAO<Rectangle>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
         return null;
     }
 
     @Override
     public Rectangle find(String id) {
         Rectangle R = null;
-        this.connect();
-        try (PreparedStatement select = this.connect.prepareStatement("SELECT * FROM Rectangle R WHERE R.Nom = ?")) {
+        this.cdb.connect();
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM Rectangle R WHERE R.Nom = ?")) {
             select.setString(1, id);
             try (ResultSet res = select.executeQuery()) {
                 if(res.next()) {
@@ -38,7 +38,7 @@ public class RectangleDAO extends DAO<Rectangle>{
             e.printStackTrace();
         }
 
-        this.disconnect();
+        this.cdb.disconnect();
 
         return R;
     }

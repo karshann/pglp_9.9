@@ -8,8 +8,8 @@ import java.util.List;
 public class CompositeFormeDAO extends DAO<CompositeForme> {
     @Override
     public CompositeForme create(CompositeForme obj) {
-        this.connect();
-        try (PreparedStatement CompositeFormeInsert = this.connect.prepareStatement("INSERT INTO CompositeForme(Nom,objNom,type) values(?, ?, ?)"); ) {
+        this.cdb.connect();
+        try (PreparedStatement CompositeFormeInsert = this.cdb.connect.prepareStatement("INSERT INTO CompositeForme(Nom,objNom,type) values(?, ?, ?)"); ) {
             List<Composite> enfantForme=obj.getEnfantForme();
             DAO D;
             for (Composite composite:enfantForme) {
@@ -63,17 +63,17 @@ public class CompositeFormeDAO extends DAO<CompositeForme> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
         return null;
     }
 
     @Override
     public CompositeForme find(String id) {
         CompositeForme C=new CompositeForme(id);
-        this.connect();
+        this.cdb.connect();
         int type;
         DAO D;
-        try (PreparedStatement select = this.connect.prepareStatement("SELECT * FROM CompositeForme C WHERE C.Nom = ?");){
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM CompositeForme C WHERE C.Nom = ?");){
             select.setString(1, id);
             try(ResultSet res = select.executeQuery()){
                 while(res.next()){
@@ -110,13 +110,13 @@ public class CompositeFormeDAO extends DAO<CompositeForme> {
 
     @Override
     public void delete(String id) {
-        this.connect();
-        try (PreparedStatement delete = this.connect.prepareStatement("DELETE FROM CompositeForm C WHERE C.Nom = ?"); ) {
+        this.cdb.connect();
+        try (PreparedStatement delete = this.cdb.connect.prepareStatement("DELETE FROM CompositeForm C WHERE C.Nom = ?"); ) {
             delete.setString(1, id);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
     }
 }

@@ -7,26 +7,28 @@ import java.sql.SQLException;
 class CarreDAO extends DAO<Carre>{
     @Override
     public Carre create(Carre obj) {
-        this.connect();
-        try (PreparedStatement carreInsert = this.connect.prepareStatement("INSERT INTO Triangle(Nom, cote, x, y) values(?, ?, ?, ?)"); ) {
+        this.cdb.connect();
+
+        try {
+            PreparedStatement carreInsert = this.cdb.connect.prepareStatement("INSERT INTO Carre(Nom, x, y, cote) values(?, ?, ?, ?)");
             carreInsert.setString(1, obj.Nom);
-            carreInsert.setDouble(2, obj.cote);
             carreInsert.setDouble(3, obj.p1.x);
             carreInsert.setDouble(4, obj.p1.y);
+            carreInsert.setDouble(2, obj.cote);
             carreInsert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
-        return null;
+        this.cdb.disconnect();
+        return obj;
     }
 
     @Override
     public Carre find(String id) {
         Carre c = null;
-        this.connect();
+        this.cdb.connect();
         try (PreparedStatement select =
-                     this.connect.prepareStatement("SELECT * FROM Carre C WHERE C.Nom = ?")) {
+                     this.cdb.connect.prepareStatement("SELECT * FROM Carre C WHERE C.Nom = ?")) {
             select.setString(1, id);
             try (ResultSet res = select.executeQuery()) {
                 if(res.next()) {
@@ -37,22 +39,22 @@ class CarreDAO extends DAO<Carre>{
             e.printStackTrace();
         }
 
-        this.disconnect();
+        this.cdb.disconnect();
 
         return c;
     }
 
     @Override
     public void delete(String id) {
-        this.connect();
+        this.cdb.connect();
         try (PreparedStatement delete =
-                     this.connect.prepareStatement("DELETE FROM Carre C WHERE C.Nom = ?"); ) {
+                     this.cdb.connect.prepareStatement("DELETE FROM Carre C WHERE C.Nom = ?"); ) {
             delete.setString(1, id);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.disconnect();
+        this.cdb.disconnect();
 
     }
 }

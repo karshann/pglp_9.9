@@ -14,7 +14,7 @@ public class CommandeSave implements Commande{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws  NullPointerException{
         Composite composite=this.I.getComposite(this.object);
         DAO D;
         if (composite instanceof CompositeForme){
@@ -24,9 +24,12 @@ public class CommandeSave implements Commande{
         else if (composite instanceof Carre){
             D=new CarreDAO();
             D.create((Carre)composite);
+
         }
         else if (composite instanceof Cercle){
             D=new CercleDAO();
+            Cercle c =(Cercle)composite;
+            c.print();
             D.create((Cercle)composite);
         }
         else if (composite instanceof Triangle){
