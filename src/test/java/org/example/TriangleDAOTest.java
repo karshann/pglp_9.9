@@ -9,14 +9,14 @@ public class TriangleDAOTest {
     @Test
     public void create() {
         Triangle T =new Triangle("t",5,2,6,4,7,8);
-        TriangleDAO TD =new TriangleDAO();
+        TriangleDAO TD =new TriangleDAO(1);
         assertEquals(TD.create(T),T);
     }
 
     @Test
     public void find() {
         Triangle T1=new Triangle("t",5,2,6,4,7,8);
-        TriangleDAO TD=new TriangleDAO();
+        TriangleDAO TD=new TriangleDAO(1);
         Triangle T2=TD.find("t");
         assertEquals(T1.Nom , T2.Nom);
         assertEquals(T1.p1.x, T2.p1.x,0.0);
@@ -29,7 +29,7 @@ public class TriangleDAOTest {
 
     @Test
     public void delete() {
-        TriangleDAO TD= new TriangleDAO();
+        TriangleDAO TD= new TriangleDAO(1);
         TD.delete("t");
         assertEquals(TD.find("t") , null);
     }
@@ -37,7 +37,7 @@ public class TriangleDAOTest {
     @Test
     public void update() {
         Triangle T1=new Triangle("t",5,2,6,4,7,8);
-        TriangleDAO RD=new TriangleDAO();
+        TriangleDAO RD=new TriangleDAO(1);
         assertEquals(RD.update(T1),T1);
     }
 }

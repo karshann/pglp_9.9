@@ -3,18 +3,23 @@ package org.example;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 class CarreDAO extends DAO<Carre>{
+    CarreDAO(int dessin){
+        this.dessin=dessin;
+    }
     @Override
     public Carre create(Carre obj) {
         this.cdb.connect();
 
         try {
-            PreparedStatement carreInsert = this.cdb.connect.prepareStatement("INSERT INTO Carre(Nom, x, y, cote) values(?, ?, ?, ?)");
+            PreparedStatement carreInsert = this.cdb.connect.prepareStatement("INSERT INTO Carre(Nom, x, y, cote, dessin) values(?, ?, ?, ?, ?)");
             carreInsert.setString(1, obj.Nom);
-            carreInsert.setDouble(3, obj.p1.x);
-            carreInsert.setDouble(4, obj.p1.y);
-            carreInsert.setDouble(2, obj.cote);
+            carreInsert.setDouble(2, obj.p1.x);
+            carreInsert.setDouble(3, obj.p1.y);
+            carreInsert.setDouble(4, obj.cote);
+            carreInsert.setInt(5, this.dessin);
             carreInsert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,5 +81,18 @@ class CarreDAO extends DAO<Carre>{
         }
         this.cdb.disconnect();
 
+    }
+
+    @Override
+    public void deletedessin(int dessin) {
+        this.cdb.connect();
+        try (PreparedStatement delete =
+                     this.cdb.connect.prepareStatement("DELETE FROM Carre C WHERE C.dessin = ?"); ) {
+            delete.setInt(1, dessin);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cdb.disconnect();
     }
 }

@@ -17,15 +17,17 @@ public class Commandeaddgroupe implements Commande {
         suite=suite.replaceAll("\\(" ,"");
         suite=suite.replaceAll("\\)","");
         String[] val=suite.split(",");
-        if (val.length>2) throw new NumberFormatException();
+        if (val.length!=2) throw new NumberFormatException();
         nameG=val[0];
         nameF=val[1];
     }
     @Override
     public void execute() {
+
         if(this.I.getComposite(nameG)instanceof CompositeForme) {
             c= (CompositeForme)this.I.getComposite(nameG);
             c.addComposite(this.I.getComposite(nameF));
+            this.I.supressionComposite(this.I.getComposite(nameF));
 
         }
         else{
@@ -36,5 +38,6 @@ public class Commandeaddgroupe implements Commande {
     @Override
     public void print() {
         c.print();
+        this.I.affiche_Liste();
     }
 }

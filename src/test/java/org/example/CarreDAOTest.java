@@ -9,14 +9,14 @@ public class CarreDAOTest {
     @Test
     public void create() {
         Carre c1= new Carre("c1",10.0,10.0,10.0);
-        CarreDAO cd= new CarreDAO();
+        CarreDAO cd= new CarreDAO(1);
         assertEquals(cd.create(c1),c1);
     }
 
     @Test
     public void find() {
         Carre c1= new Carre("c1",10.0,10.0,10.0);
-        CarreDAO cd= new CarreDAO();
+        CarreDAO cd= new CarreDAO(1);
         Carre c2 = cd.find("c1");
         assertEquals(c1.Nom , c2.Nom);
         assertEquals(c1.cote, c2.cote,0.0);
@@ -27,7 +27,7 @@ public class CarreDAOTest {
 
     @Test
     public void delete() {
-        CarreDAO cd= new CarreDAO();
+        CarreDAO cd= new CarreDAO(1);
         cd.delete("c1");
         assertEquals(cd.find("c1") , null);
     }
@@ -35,7 +35,7 @@ public class CarreDAOTest {
     @Test
     public void update() {
         Carre c1= new Carre("c1",10.0,10.0,5);
-        CarreDAO cd=new CarreDAO();
+        CarreDAO cd=new CarreDAO(1);
         assertEquals(cd.update(c1),c1);
     }
 }

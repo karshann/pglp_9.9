@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.List;
+
 public class CommandeSave implements Commande{
     String object;
     Interpreteur I;
@@ -15,30 +17,40 @@ public class CommandeSave implements Commande{
 
     @Override
     public void execute() throws  NullPointerException{
-        Composite composite=this.I.getComposite(this.object);
+        List<Composite> c=this.I.compositeListe;
         DAO D;
-        if (composite instanceof CompositeForme){
-            D=new CompositeFormeDAO();
-            D.create((CompositeForme)composite);
-        }
-        else if (composite instanceof Carre){
-            D=new CarreDAO();
-            D.create((Carre)composite);
+        D=new CompositeFormeDAO(this.I.dessin);
+        D.deletedessin(this.I.dessin);
+        D=new RectangleDAO(this.I.dessin);
+        D.deletedessin(this.I.dessin);
+        D=new CarreDAO(this.I.dessin);
+        D.deletedessin(this.I.dessin);
+        D=new CercleDAO(this.I.dessin);
+        D.deletedessin(this.I.dessin);
+        D=new TriangleDAO(this.I.dessin);
+        D.deletedessin(this.I.dessin);
+        for (Composite composite:c) {
+            if (composite instanceof CompositeForme){
+                D=new CompositeFormeDAO(this.I.dessin);
+                D.create((CompositeForme)composite);
+            }
+            else if (composite instanceof Carre){
+                D=new CarreDAO(this.I.dessin);
+                D.create((Carre)composite);
+            }
+            else if (composite instanceof Cercle){
+                D=new CercleDAO(this.I.dessin);
+                D.create((Cercle)composite);
 
-        }
-        else if (composite instanceof Cercle){
-            D=new CercleDAO();
-            Cercle c =(Cercle)composite;
-            c.print();
-            D.create((Cercle)composite);
-        }
-        else if (composite instanceof Triangle){
-            D=new TriangleDAO();
-            D.create((Triangle)composite);
-        }
-        else if (composite instanceof Rectangle) {
-            D=new RectangleDAO();
-            D.create((Rectangle)composite);
+            }
+            else if (composite instanceof Triangle){
+                D=new TriangleDAO(this.I.dessin);
+                D.create((Triangle)composite);
+            }
+            else if (composite instanceof Rectangle) {
+                D=new RectangleDAO(this.I.dessin);
+                D.create((Rectangle)composite);
+            }
         }
     }
 

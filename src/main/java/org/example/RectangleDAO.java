@@ -5,16 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RectangleDAO extends DAO<Rectangle>{
+    RectangleDAO(int dessin){
+        this.dessin=dessin;
+    }
     @Override
     public Rectangle create(Rectangle obj) {
         this.cdb.connect();
-        try (PreparedStatement rectangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Rectangle(nom,x1,y1,x2,y2) values(?, ?, ?, ?, ?)");) {
+        try (PreparedStatement rectangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Rectangle(nom,x1,y1,x2,y2,dessin) values(?, ?, ?, ?, ?, ?)");) {
             rectangleInsert.setString(1, obj.nom);
             rectangleInsert.setDouble(2, obj.p1.x);
             rectangleInsert.setDouble(3, obj.p1.y);
             rectangleInsert.setDouble(4, obj.p2.x);
             rectangleInsert.setDouble(5, obj.p2.y);
-
+            rectangleInsert.setInt(6, this.dessin);
             rectangleInsert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,6 +73,19 @@ public class RectangleDAO extends DAO<Rectangle>{
         try (PreparedStatement delete =
                      this.cdb.connect.prepareStatement("DELETE FROM Rectangle R WHERE R.Nom = ?"); ) {
             delete.setString(1, id);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cdb.disconnect();
+    }
+
+    @Override
+    public void deletedessin(int dessin) {
+        this.cdb.connect();
+        try (PreparedStatement delete =
+                     this.cdb.connect.prepareStatement("DELETE FROM Rectangle R WHERE R.dessin = ?"); ) {
+            delete.setInt(1, dessin);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,7 +28,7 @@ public class CommandeMove implements Commande{
         try{
             x=Double.parseDouble(val[1]);
             y=Double.parseDouble(val[2]);
-            c=I.getComposite(name);
+            c=I.getComposite_(name);
             c.move(x,y);
         }
         catch(IllegalArgumentException e){

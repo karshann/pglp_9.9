@@ -9,14 +9,14 @@ public class RectangleDAOTest {
     @Test
     public void create() {
         Rectangle R= new Rectangle("r",10,10,12,13);
-        RectangleDAO RD=new RectangleDAO();
+        RectangleDAO RD=new RectangleDAO(1);
         assertEquals(RD.create(R),R);
     }
 
     @Test
     public void find() {
         Rectangle R= new Rectangle("r",10,10,12,13);
-        RectangleDAO RD= new RectangleDAO();
+        RectangleDAO RD= new RectangleDAO(1);
         Rectangle R2 = RD.find("r");
         assertEquals(R.nom , R2.nom);
         assertEquals(R.p1.x, R2.p1.x,0.0);
@@ -27,7 +27,7 @@ public class RectangleDAOTest {
 
     @Test
     public void delete() {
-        RectangleDAO cd= new RectangleDAO();
+        RectangleDAO cd= new RectangleDAO(1);
         cd.delete("r");
         assertEquals(cd.find("r") , null);
     }
@@ -35,7 +35,7 @@ public class RectangleDAOTest {
     @Test
     public void update() {
         Rectangle R= new Rectangle("r",10.0,10.0,5, 7);
-        RectangleDAO RD=new RectangleDAO();
+        RectangleDAO RD=new RectangleDAO(1);
         assertEquals(RD.update(R),R);
     }
 }

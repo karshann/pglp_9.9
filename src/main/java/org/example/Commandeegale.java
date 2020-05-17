@@ -64,7 +64,7 @@ public class Commandeegale implements Commande{
                double x1 = Double.parseDouble(val[0]);
                double y1 = Double.parseDouble(val[1]);
                double cote = Double.parseDouble(val[2]);
-               this.I.ajoutListe(c=new Carre(name, x1, y1, cote));
+               this.I.ajoutListe(c=new Carre(name, cote, x1, y1));
            }
        }
     }

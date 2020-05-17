@@ -5,10 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TriangleDAO extends DAO<Triangle> {
+    TriangleDAO(int dessin){
+        this.dessin=dessin;
+    }
     @Override
     public Triangle create(Triangle obj) {
         this.cdb.connect();
-        try (PreparedStatement TriangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Triangle(Nom,x1,y1,x2,y2,x3,y3) values(?, ?, ?, ?, ?, ?, ?)");) {
+        try (PreparedStatement TriangleInsert = this.cdb.connect.prepareStatement("INSERT INTO Triangle(Nom,x1,y1,x2,y2,x3,y3,dessin) values(?, ?, ?, ?, ?, ?, ?, ?)");) {
             TriangleInsert.setString(1, obj.Nom);
             TriangleInsert.setDouble(2, obj.p1.x);
             TriangleInsert.setDouble(3, obj.p1.y);
@@ -16,6 +19,8 @@ public class TriangleDAO extends DAO<Triangle> {
             TriangleInsert.setDouble(5, obj.p2.y);
             TriangleInsert.setDouble(6, obj.p3.x);
             TriangleInsert.setDouble(7, obj.p3.y);
+            TriangleInsert.setInt(8, this.dessin);
+
             TriangleInsert.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,5 +83,19 @@ public class TriangleDAO extends DAO<Triangle> {
             e.printStackTrace();
         }
         this.cdb.disconnect();
+    }
+
+    @Override
+    public void deletedessin(int dessin) {
+        this.cdb.connect();
+        try (PreparedStatement delete =
+                     this.cdb.connect.prepareStatement("DELETE FROM Triangle T WHERE T.dessin = ?"); ) {
+            delete.setInt(1, dessin);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cdb.disconnect();
+
     }
 }

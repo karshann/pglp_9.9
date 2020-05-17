@@ -5,15 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CercleDAO extends DAO<Cercle>{
+    CercleDAO(int dessin){
+        this.dessin=dessin;
+    }
     @Override
     public Cercle create(Cercle obj) {
         this.cdb.connect();
         try {
-            PreparedStatement cercleInsert = this.cdb.connect.prepareStatement("INSERT INTO Cercle(Nom, x, y, rayon) values(?, ?, ?, ?)");
+            PreparedStatement cercleInsert = this.cdb.connect.prepareStatement("INSERT INTO Cercle(Nom, x, y, rayon,dessin) values(?, ?, ?, ?, ?)");
             cercleInsert.setString(1, obj.nom);
             cercleInsert.setDouble(2, obj.centre.x);
             cercleInsert.setDouble(3, obj.centre.y);
             cercleInsert.setDouble(4, obj.rayon);
+            cercleInsert.setInt(5, this.dessin);
             cercleInsert.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,6 +72,19 @@ public class CercleDAO extends DAO<Cercle>{
         try (PreparedStatement delete =
                      this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.Nom = ?"); ) {
             delete.setString(1, id);
+            delete.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cdb.disconnect();
+    }
+
+    @Override
+    public void deletedessin(int dessin) {
+        this.cdb.connect();
+        try (PreparedStatement delete =
+                     this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.dessin = ?"); ) {
+            delete.setInt(1, dessin);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
