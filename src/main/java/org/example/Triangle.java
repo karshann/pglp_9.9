@@ -7,9 +7,9 @@ public class Triangle implements Forme {
     Point p3;
     public Triangle(String Nom , double x1 , double y1 , double x2 , double y2, double x3 , double y3 ){
         this.Nom=Nom;
-        this.p1=new Point(x1,y1);
-        this.p2=new Point(x2,y2);
-        this.p3=new Point(x3,y3);
+        this.p1 = new Point(x1,y1);
+        this.p2 = new Point(x2,y2);
+        this.p3 = new Point(x3,y3);
     }
     @Override
     public void move(double x, double y) {

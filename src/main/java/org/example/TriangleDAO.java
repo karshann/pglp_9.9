@@ -3,6 +3,7 @@ package org.example;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class TriangleDAO extends DAO<Triangle> {
     TriangleDAO(int dessin){
@@ -97,5 +98,22 @@ public class TriangleDAO extends DAO<Triangle> {
         }
         this.cdb.disconnect();
 
+    }
+
+    @Override
+    public void load(Interpreteur interpreteur) {
+        this.cdb.connect();
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM Triangle T WHERE T.dessin = ?")) {
+            select.setInt(1, this.dessin);
+            try (ResultSet res = select.executeQuery()) {
+                if(res.next()) {
+                    interpreteur.compositeListe.add(new Triangle(res.getString("Nom"), Double.parseDouble(res.getString("x1")), Double.parseDouble(res.getString("y1")),Double.parseDouble(res.getString("x2")), Double.parseDouble(res.getString("y2")),Double.parseDouble(res.getString("x3")), Double.parseDouble(res.getString("y3"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.cdb.disconnect();
     }
 }

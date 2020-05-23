@@ -20,6 +20,6 @@ public abstract class DAO<T>  {
 
     public abstract void deletedessin(int dessin);
 
-    public abstract void load(List<Composite> compositeList);
+    public abstract void load(Interpreteur interpreteur);
 
 }

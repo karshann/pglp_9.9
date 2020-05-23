@@ -95,4 +95,22 @@ class CarreDAO extends DAO<Carre>{
         }
         this.cdb.disconnect();
     }
+
+    @Override
+    public void load(Interpreteur interpreteur) {
+        this.cdb.connect();
+        try (PreparedStatement select =
+                     this.cdb.connect.prepareStatement("SELECT * FROM Carre C WHERE C.dessin = ?")) {
+            select.setInt(1, this.dessin);
+            try (ResultSet res = select.executeQuery()) {
+                if(res.next()) {
+                    interpreteur.compositeListe.add(new Carre(res.getString("Nom"), Double.parseDouble(res.getString("cote")), Double.parseDouble(res.getString("x")),Double.parseDouble(res.getString("y"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.cdb.disconnect();
+    }
 }

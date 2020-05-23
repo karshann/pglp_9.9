@@ -21,16 +21,11 @@ public class DrawingApp
             Class.forName ("org.h2.Driver").getDeclaredConstructor().newInstance();
             Connection connection = DriverManager.getConnection ("jdbc:h2:./BD/bd","sa","sa");
             stmt=connection.createStatement();
-            stmt.execute("DROP TABLE CompositeForme");
-            stmt.execute("DROP TABLE Carre");
-            stmt.execute("DROP TABLE Cercle");
-            stmt.execute("DROP TABLE Rectangle");
-            stmt.execute("DROP TABLE Triangle");
-            stmt.execute("CREATE TABLE CompositeForme( Nom varchar(50) , objNom varchar(50), type varchar(50), dessin integer)");
-            stmt.execute("CREATE TABLE Carre( nom varchar(50) , x double, y double, cote double, dessin integer, PRIMARY KEY(nom,dessin));");
-            stmt.execute("CREATE TABLE Cercle( nom varchar(50) , x double, y double, rayon double,dessin integer,PRIMARY KEY(nom,dessin));");
-            stmt.execute("CREATE TABLE Rectangle( nom varchar(50) , x1 double, y1 double, x2 double, y2 double,dessin integer,PRIMARY KEY(nom,dessin));");
-            stmt.execute("CREATE TABLE Triangle( nom varchar(50) , x1 double, y1 double, x2 double, y2 double, x3 double, y3 double,dessin integer,PRIMARY KEY(nom,dessin));");
+            stmt.execute("CREATE TABLE IF NOT EXISTS CompositeForme( Nom varchar(50) , objNom varchar(50), type varchar(50), dessin integer)");
+            stmt.execute("CREATE TABLE IF NOT EXISTS Carre( nom varchar(50) , x double, y double, cote double, dessin integer, PRIMARY KEY(nom,dessin));");
+            stmt.execute("CREATE TABLE IF NOT EXISTS Cercle( nom varchar(50) , x double, y double, rayon double,dessin integer,PRIMARY KEY(nom,dessin));");
+            stmt.execute("CREATE TABLE IF NOT EXISTS Rectangle( nom varchar(50) , x1 double, y1 double, x2 double, y2 double,dessin integer,PRIMARY KEY(nom,dessin));");
+            stmt.execute("CREATE TABLE IF NOT EXISTS Triangle( nom varchar(50) , x1 double, y1 double, x2 double, y2 double, x3 double, y3 double,dessin integer,PRIMARY KEY(nom,dessin));");
             connection.close();
         } catch (SQLException | ClassNotFoundException | NoSuchMethodException e) {
             e.printStackTrace();

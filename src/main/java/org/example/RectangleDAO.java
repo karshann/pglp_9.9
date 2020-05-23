@@ -3,6 +3,7 @@ package org.example;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class RectangleDAO extends DAO<Rectangle>{
     RectangleDAO(int dessin){
@@ -90,6 +91,23 @@ public class RectangleDAO extends DAO<Rectangle>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.cdb.disconnect();
+    }
+
+    @Override
+    public void load(Interpreteur interpreteur) {
+        this.cdb.connect();
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM Rectangle R WHERE R.dessin = ?")) {
+            select.setInt(1, this.dessin);
+            try (ResultSet res = select.executeQuery()) {
+                if(res.next()) {
+                    interpreteur.compositeListe.add(new Rectangle(res.getString("nom"), Double.parseDouble(res.getString("x1")), Double.parseDouble(res.getString("y1")),Double.parseDouble(res.getString("x2")), Double.parseDouble(res.getString("y2"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         this.cdb.disconnect();
     }
 }

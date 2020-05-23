@@ -28,9 +28,7 @@ public class Interpreteur {
             else{
                 if (composite instanceof CompositeForme){
                     cf=(CompositeForme)composite;
-                    for (Composite composite1 : cf.getEnfantForme()){
-                        if(composite1.return_name().equals(name)) return composite1;
-                    }
+                    return cf.getComposite(name);
                 }
             }
         }
@@ -43,20 +41,25 @@ public class Interpreteur {
         }
         return null;
     }
-
-    public List<Composite> getdessin(int dessin){
-        return this.desssins.get(dessin);
+    public boolean verificationnom(String nom){
+        CompositeForme cf;
+        for (Composite composite:this.compositeListe) {
+            if(composite.return_name().equals(nom)){
+                System.err.println("Le nom existe déjà");
+                return false;
+            }
+            else{
+                if (composite instanceof CompositeForme){
+                    cf=(CompositeForme)composite;
+                    return cf.verif_nom(nom);
+                }
+            }
+        }
+        return true;
     }
 
     public void supressionComposite(Composite composite){
         this.compositeListe.remove(composite);
-    }
-
-    public void ajout_nom(String S){
-        this.nomdessin.add(S);
-    }
-    public void new_dessin(){
-        this.dessin++;
     }
 
 
@@ -69,22 +72,22 @@ public class Interpreteur {
             composite.print();
         }
     }
-    public void supressionListe(Composite composite){
-        this.compositeListe.remove(composite);
-    }
-    public Interpreteur gotodessin(int dessin){
-        List<Composite> copy = new ArrayList<>(this.compositeListe);
-        this.desssins.add(this.dessin,copy);
-        this.dessin=dessin;
-        this.compositeListe.clear();
-        this.compositeListe=new ArrayList<>(this.desssins.get(this.dessin));
-        return this;
-    }
-    public void afficher(List<Composite> list){
-        for (Composite composite:list) {
-            composite.print();
+
+    public void supressionNom(Composite composite){
+        CompositeForme cf;
+        for (Composite comp:this.compositeListe) {
+            if(comp.return_name().equals(composite.return_name())) {
+                this.compositeListe.remove(composite);
+                break;
+            }
+            if (comp instanceof CompositeForme){
+                cf= ((CompositeForme) comp);
+                cf.cremove(composite);
+            }
         }
     }
+
+
 
 
 }

@@ -146,4 +146,43 @@ public class CompositeFormeDAO extends DAO<CompositeForme> {
         }
         this.cdb.disconnect();
     }
+
+    @Override
+    public void load(Interpreteur interpreteur) {
+        this.cdb.connect();
+        int type;
+        String objname;
+        String nom=" ";
+        CompositeForme c=null;
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM CompositeForme C WHERE C.dessin = ? ORDER BY C.Nom");) {
+            select.setInt(1, this.dessin);
+            try (ResultSet res = select.executeQuery()) {
+                while (res.next()) {
+                    type=Integer.parseInt(res.getString("type"));
+                    objname=res.getString("objNom");
+                    if (!nom.equals(res.getString("Nom"))){
+                        nom=res.getString("Nom");
+                        if (interpreteur.getComposite_(nom)==null){
+                            System.out.println("creation compositeforme");
+                            interpreteur.compositeListe.add(new CompositeForme(nom));
+                        }
+                    }
+                    if (type==0){
+                        c=(CompositeForme)interpreteur.getComposite_(nom);
+                        c.addComposite(new CompositeForme(objname));
+                    }
+                    else {
+                        System.out.println("creation objet");
+                        c=(CompositeForme)interpreteur.getComposite_(nom);
+                        c.addComposite(interpreteur.getComposite_(objname));
+                        interpreteur.compositeListe.remove(interpreteur.getComposite_(objname));
+                    }
+
+                }
+            }
+        }
+        catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

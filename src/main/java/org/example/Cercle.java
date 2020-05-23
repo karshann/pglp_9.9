@@ -6,9 +6,9 @@ public class Cercle implements Forme{
     double rayon;
 
     public Cercle(String Nom , double x , double y , double rayon){
-        this.centre=new Point(x,y);
-        this.nom=Nom;
-        this.rayon=rayon;
+        this.centre = new Point(x,y);
+        this.nom = Nom;
+        this.rayon = rayon;
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.example;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CercleDAO extends DAO<Cercle>{
     CercleDAO(int dessin){
@@ -49,8 +50,7 @@ public class CercleDAO extends DAO<Cercle>{
     @Override
     public Cercle update(Cercle obj) {
         this.cdb.connect();
-        try (PreparedStatement update =
-                     this.cdb.connect.prepareStatement("UPDATE Cercle SET x= ? , y= ? , rayon =? WHERE Nom= ?")) {
+        try (PreparedStatement update = this.cdb.connect.prepareStatement("UPDATE Cercle SET x= ? , y= ? , rayon =? WHERE Nom= ?")) {
             update.setDouble(1, obj.centre.x);
             update.setDouble(2, obj.centre.y);
             update.setDouble(3, obj.rayon);
@@ -69,8 +69,7 @@ public class CercleDAO extends DAO<Cercle>{
     @Override
     public void delete(String id) {
         this.cdb.connect();
-        try (PreparedStatement delete =
-                     this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.Nom = ?"); ) {
+        try (PreparedStatement delete = this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.Nom = ?"); ) {
             delete.setString(1, id);
             delete.executeUpdate();
         } catch (SQLException e) {
@@ -82,13 +81,29 @@ public class CercleDAO extends DAO<Cercle>{
     @Override
     public void deletedessin(int dessin) {
         this.cdb.connect();
-        try (PreparedStatement delete =
-                     this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.dessin = ?"); ) {
+        try (PreparedStatement delete = this.cdb.connect.prepareStatement("DELETE FROM Cercle C WHERE C.dessin = ?"); ) {
             delete.setInt(1, dessin);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.cdb.disconnect();
+    }
+
+    @Override
+    public void load(Interpreteur interpreteur) {
+        this.cdb.connect();
+        try (PreparedStatement select = this.cdb.connect.prepareStatement("SELECT * FROM Cercle C WHERE C.dessin = ?")) {
+            select.setInt(1, this.dessin);
+            try (ResultSet res = select.executeQuery()) {
+                if(res.next()) {
+                    interpreteur.compositeListe.add(new Cercle(res.getString("Nom"), Double.parseDouble(res.getString("x")), Double.parseDouble(res.getString("y")),Double.parseDouble(res.getString("rayon"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         this.cdb.disconnect();
     }
 }

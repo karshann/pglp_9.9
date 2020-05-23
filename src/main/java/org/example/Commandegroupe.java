@@ -18,7 +18,9 @@ public class Commandegroupe implements Commande{
 
     @Override
     public void execute() {
-        this.I.ajoutListe(c=new CompositeForme(name));
+        if (this.I.verificationnom(name)){
+            this.I.ajoutListe(c=new CompositeForme(name));
+        }
     }
     @Override
     public void print() {

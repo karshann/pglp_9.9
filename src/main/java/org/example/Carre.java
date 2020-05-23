@@ -1,13 +1,13 @@
 package org.example;
 
-public class Carre implements Forme{
+public class Carre implements Forme {
     String Nom;
     Point p1;
     double cote;
-    public Carre(String nom ,double cote , double x , double y){
-        this.Nom=nom;
-        this.p1=new Point(x,y);
-        this.cote=cote;
+    public Carre(String nom ,double cote , double x , double y) {
+        this.Nom = nom;
+        this.p1 = new Point(x,y);
+        this.cote = cote;
 
     }
 
